@@ -131,6 +131,10 @@ export class AuthenticationService {
     return this.http.post(this.BACKEND_URL_USERS + '/hash', body, httpOptions);
   }
 
+  public updateUser(user): Observable<any> {
+    return this.http.put(this.BACKEND_URL_USERS + '/update/' + user._id, user ,httpOptions);
+  }
+
   b64DecodeUnicode(str) {
     return decodeURIComponent(atob(str).split('').map(function(c) {
         return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
