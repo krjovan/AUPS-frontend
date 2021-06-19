@@ -1,0 +1,38 @@
+<div style="width:100%; position: relative; padding-top: 30px;">
+    <div class="table-wrapper" style="padding-top: 40px;">
+    <table class="fl-table">
+        <thead>
+          <tr>
+            <th>Amount  </th>
+            <th>Date</th>
+            <th>User</th>
+            <th>Delivers</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of array; let i = index">
+            <th>{{item.amount}}</th>
+            <th>{{item.Date | date: 'dd.MM.yyyy'}}</th>
+            <th>{{findByName(item.userID)}}</th>
+            <th>{{findByName2(item.deliversID)}}</th>
+            <th><i (click)="delete(i)" class="fa fa-trash  my-icons" aria-hidden="true"></i></th>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+</div>
+
+<div id="id03" class="modal" [ngStyle]="{'display': deleteOpen ==true? 'block': 'none'}">
+  <span  class="close" (click)="closeModal()" title="Close Modal">×</span>
+  <form class="modal-content">
+    <div class="container">
+      <p>Are you sure you want to delete this item?</p>
+
+      <div class="clearfix">
+        <button type="button" (click)="closeModal()" class="cancelbtn">Cancel</button>
+        <button type="button" (click)="deleteConf()" class="deletebtn">Delete</button>
+      </div>
+    </div>
+  </form>
+</div>

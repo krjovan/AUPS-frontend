@@ -1,0 +1,15 @@
+<div style="min-height: 600px; width: 100%; text-align: center; padding-top: 20px;">
+    <button (click)="open(0)" [ngClass]="chosen == 0 ? '' : 'primary'" mat-button style="margin-left:3px; margin-right: 3px;">Articles</button>
+    <button (click)="open(1)" [ngClass]="chosen == 1 ? '' : 'primary'" mat-button style="margin-left:3px; margin-right: 3px;">Types</button>
+    <button (click)="open(2)" [ngClass]="chosen == 2 ? '' : 'primary'" mat-button style="margin-left:3px; margin-right: 3px;">Stocks</button>
+    <button (click)="open(3)" [ngClass]="chosen == 3 ? '' : 'primary'" mat-button style="margin-left:3px; margin-right: 3px;">Suppliers</button>
+    <button (click)="open(4)" [ngClass]="chosen == 4 ? '' : 'primary'" mat-button style="margin-left:3px; margin-right: 3px;">Orders</button>
+    <button (click)="open(5)" [ngClass]="chosen == 5 ? '' : 'primary'" mat-button style="margin-left:3px; margin-right: 3px;">Delivery</button>
+    
+    <app-admin-articles *ngIf="chosen==0"></app-admin-articles>
+    <app-admin-articles-types *ngIf="chosen==1"></app-admin-articles-types>
+    <app-admin-stocks *ngIf="chosen==2"></app-admin-stocks>
+    <app-admin-supplier *ngIf="chosen==3"></app-admin-supplier>
+    <app-admin-orders *ngIf="chosen==4"></app-admin-orders>
+    <app-admin-article-delivery *ngIf="chosen==5"></app-admin-article-delivery>
+</div>

@@ -1,0 +1,94 @@
+<div style="width:100%; position: relative; padding-top: 30px;">
+    <button (click)="addNew()"  mat-button style="background-color:green; float: right; color:white; margin-right: 90px;">Add New +</button>
+
+    <div class="table-wrapper" style="padding-top: 40px;">
+    <table class="fl-table">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Image</th>
+            <th>Type</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of array; let i = index">
+            <th>{{item.name}}</th>
+            <th>{{item.description}}</th>
+            <th>{{item.image}}</th>
+            <th>{{findByName(item.typeID)}}</th>
+            <th><i (click)="edit(i)" class="fa fa-pencil my-icons" aria-hidden="true"></i><i (click)="delete(i)" class="fa fa-trash  my-icons" aria-hidden="true"></i></th>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+</div>
+
+
+
+
+<div class="w3-container w3-center">
+
+  <div id="id02" class="w3-modal" [ngStyle]="{'display': open ==true? 'block': 'none'}" >
+    <div class="w3-modal-content w3-animate-top w3-card-4">
+      <header class="w3-container w3-blue">
+        <span (click)="closeModal()" class="w3-button w3-display-topright">&times;</span>
+        <h2>Manage articles</h2>
+      </header>
+      <div class="w3-container">
+        <form class="w3-container" #formControlEdit="ngForm">
+          <p>
+            <label class="w3-text-blue">
+              <b>Name</b>
+            </label>
+            <input minlength="3" [(ngModel)]="editable.name" required  name="name" type="text" style="text-align: center;" class="w3-input w3-border w3-light-grey">
+          </p>
+
+          <p>
+            <label class="w3-text-blue">
+              <b>Description</b>
+            </label>
+            <input minlength="3" [(ngModel)]="editable.description" required  name="description" type="text" style="text-align: center;" class="w3-input w3-border w3-light-grey">
+          </p>
+
+          <p>
+            <label class="w3-text-blue">
+              <b>Image</b>
+            </label>
+            <input minlength="3" [(ngModel)]="editable.image" required  name="image" type="text" style="text-align: center;" class="w3-input w3-border w3-light-grey">
+          </p>
+          <p>
+            <label class="w3-text-blue">
+              <b>Type</b>
+            </label>
+            <select required [(ngModel)]="editable.typeID" style="text-align: center;" class="w3-center w3-input w3-border w3-light-grey w3-select w3-border"
+              name="option">
+              <option *ngFor="let obj of nested;" [value]="obj._id">{{obj.name}}</option>
+            </select>
+          </p>
+ 
+          <p class="w3-center">
+            <button [disabled]="!formControlEdit.valid" (click)="updateConf()" class="w3-btn w3-blue">Done
+              <i class="fa fa-check"></i>
+            </button>
+          </p>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="id03" class="modal" [ngStyle]="{'display': deleteOpen ==true? 'block': 'none'}">
+  <span  class="close" (click)="closeModal()" title="Close Modal">×</span>
+  <form class="modal-content">
+    <div class="container">
+      <p>Are you sure you want to delete this item?</p>
+
+      <div class="clearfix">
+        <button type="button" (click)="closeModal()" class="cancelbtn">Cancel</button>
+        <button type="button" (click)="deleteConf()" class="deletebtn">Delete</button>
+      </div>
+    </div>
+  </form>
+</div>

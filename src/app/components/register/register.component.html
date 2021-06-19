@@ -53,7 +53,7 @@
       </p>
 
       <p class="w3-center">
-        <button [disabled]="!formControl.valid" (click)="register()" class="w3-btn w3-blue">Register</button>
+        <button [disabled]="!formControl.valid||(credentials.password!=confirmationPassword)" (click)="register()" class="w3-btn w3-blue">Register</button>
       </p>
     </form>
   </div>

@@ -1,3 +1,8 @@
+@import url('//fonts.googleapis.com/icon?family=Material+Icons');
+.primary{
+    background-color:#3f51b5;
+    color:white;
+}
 html{box-sizing:border-box}*,*:before,*:after{box-sizing:inherit}
 html{-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}body{margin:0}
 article,aside,details,figcaption,figure,footer,header,main,menu,nav,section{display:block}summary{display:list-item}

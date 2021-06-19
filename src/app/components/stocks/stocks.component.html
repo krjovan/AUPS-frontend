@@ -1,0 +1,20 @@
+<div class="container" style="text-align:center; margin-top:20px;">
+    <div *ngFor="let item of stocks; let i = index" class="card"
+    (click)="showStock(item)"
+    [ngClass]="{'green': item.status>=75, 'yellow': item.status>49&&item.status<75, 'red': item.status<50}"
+    style="display:inline-block !important; margin-right:50px; margin-left: 50px">
+        <div class="face face1">
+            <div class="content" style="text-align: center">
+                <img src="../../../assets/box.png">
+                <h3>{{item.name}}</h3>
+            </div>
+        </div>
+        <div class="face face2">
+            <div class="content">
+                <p>{{item.location}}, {{item.address}}</p>
+                    <a>{{item.amount}}/{{item.maximum}}</a><br>
+                    Minimum Needed {{item.minimumNeeded}}
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,49 @@
+<div >
+<div class="stock">
+  <p class="stock-name">{{ stock.name }}</p>
+  <div  class="stock-bottom">
+  <p><span class="bold-me">Location: </span>{{ stock.location }}</p>
+  <p><span class="bold-me">Address: </span>{{ stock.address }}</p>
+  <p><span class="bold-me">Minimum: </span>{{ stock.minimumNeeded }}</p>
+  <p><span class="bold-me">Amount: </span>{{ stock.amount }}</p>
+  <p><span class="bold-me">Maximum: </span>{{ stock.maximum }}</p>
+</div>
+</div>
+
+<div class="card" >
+  <img [src]="article.image" alt="product" style="width: 20vw; border:1px solid lightgrey; margin-top: 15px;" />
+  <h1>{{ article.name }}</h1>
+  <p>{{ article.description }}</p>
+  <select
+    style="text-align: center"
+    style="width: 300px; margin:auto;"
+    class="w3-center w3-input w3-border w3-light-grey w3-select w3-border"
+    name="option"
+    [(ngModel)]="order.delivers"
+  >
+  <option *ngFor="let obj of delivers" [value]="obj._id">
+    {{ obj.price }}, {{ getSupName(obj.supplierId) }}
+  </option>
+</select>
+<input  type="date"  min="{{todaysdate|date:'yyyy-MM-dd'}}" [(ngModel)]="order.date" style="width:300px; height:40px; margin-top: 5px; display: block;  margin-left:auto; margin-right:auto;" placeholder="date">
+<input type="number" min="1" [(ngModel)]="order.amount" style="width:300px; height:40px; margin-top: 5px; display: block;  margin-left:auto; margin-right:auto;" placeholder="amount">
+<input *ngIf="getCost()" style="color:green;" disabled style="width:300px; height:40px; margin-top: 5px; display: block;  margin-left:auto; margin-right:auto;" type="text" [value]="getCost()">
+  <p><button [disabled] ="!check()" (click)="makeOrder()" >Order</button></p>
+</div>
+</div>
+
+<div id="id02" class="w3-modal" [ngStyle]="{'display': open ==true? 'block': 'none'}" >
+  <div class="w3-modal-content w3-animate-top w3-card-4" style="width: 405px;">
+    <header class="w3-container w3-blue">
+      <span (click)="closeModal()" class="w3-button w3-display-topright">&times;</span>
+      <h2>Success</h2>
+    </header>
+    <div class="w3-container">
+        <p style="text-align: center;">You successfully made the order!</p>
+        <p class="w3-center">
+          <button (click)="closeModal()" class="w3-btn w3-blue">Ok
+            <i class="fa fa-check"></i>
+          </button>
+        </p>
+    </div>
+  </div>
