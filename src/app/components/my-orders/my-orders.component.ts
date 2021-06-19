@@ -10,7 +10,8 @@ import { Delivers } from '../../models/delivers';
 import { UserService } from 'src/app/services/user.service';
 import { User } from '../../models/user';
 
-
+import { StocksService } from 'src/app/services/stocks.service';
+import { Stocks } from '../../models/stocks';
 import { SupplierService } from 'src/app/services/supplier.service';
 import { Suppliers } from '../../models/supplier';
 import { Articles } from 'src/app/models/articles';
@@ -36,9 +37,15 @@ export class MyOrdersComponent implements OnInit {
 
   getNames:Suppliers[];
   getNames2:Articles[];
+
+  stocks:Stocks[];
+  showStock:Stocks[];
+
+  completeDelivery=null;
   //sub
   constructor(private stServ:OrdersService,private additional:UserService,private additional2:DeliversService,
-    private supplServ:SupplierService,private artSer:ArticlesService, private authSer: AuthenticationService) { }
+    private supplServ:SupplierService,private artSer:ArticlesService, private authSer: AuthenticationService,
+    private stockSer:StocksService) { }
   //sub
   getSubSection(){
     this.additional.getUsers({}).subscribe(array => {
@@ -75,16 +82,19 @@ export class MyOrdersComponent implements OnInit {
     this.getSubSection2();
   }
 
-  edit(index){
+/*   edit(index){
     this.editable={...this.array[index]};
     this.open=true;
     this.adding=false;
-  }
+  } */
 
   loadData(){
     let id=this.authSer.getUserDetails()._id;
     this.stServ.getOrders().subscribe(array => {
       this.array = array.filter(el=>el.userID == id);
+    });
+    this.stockSer.getStocks().subscribe(array=>{
+      this.stocks=array;
     });
   }
 
@@ -100,32 +110,39 @@ export class MyOrdersComponent implements OnInit {
     });
   }
 
+  complete(index){
+    this.editable={...this.array[index]};
+    console.log("sta mi je editabe",this.editable,this.nested2);
+    var find=this.nested2.find(el=>el._id==this.editable.deliversID);
+    var article=this.getNames2.find(el=>el._id==find.articlesId);
+    this.showStock=this.stocks.filter(el=>el.articleID==article._id);
+    this.open=true;
+  }
+
   closeModal(){
     this.open=false;
     this.deleteOpen=false;
     this.resetEditable();
   }
 
-  addNew(){
+/*   addNew(){
     this.editable=new Orders();
     this.open=true;
     this.adding=true;
-  }
+  } */
 
   resetEditable(){
     this.editable=new Orders();
   }
 
   updateConf(){
-    if(!this.adding)
-    this.stServ.updateOrder(this.editable).subscribe(()=>{
-      this.closeModal();
-      this.loadData();
-    });
-    else
-    this.stServ.addOrder(this.editable).subscribe(()=>{
-      this.closeModal();
-      this.loadData();
+    var stock=this.stocks.find(el=>el._id==this.completeDelivery);
+    stock.amount=Number(stock.amount)+Number(this.editable.amount);
+    this.stockSer.updateStock(stock).subscribe(()=>{
+      this.stServ.deleteOrder(this.editable._id).subscribe(()=>{
+        this.closeModal();
+        this.loadData();
+      });
     });
   }
 }

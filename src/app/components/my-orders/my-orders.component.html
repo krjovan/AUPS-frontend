@@ -16,11 +16,40 @@
             <th>{{item.Date | date: 'dd.MM.yyyy'}}</th>
             <th>{{findByName(item.userID)}}</th>
             <th>{{findByName2(item.deliversID)}}</th>
-            <th><i (click)="delete(i)" class="fa fa-trash  my-icons" aria-hidden="true"></i></th>
+            <th><i (click)="complete(i)" style="color:green" class="fa fa-check  my-icons" aria-hidden="true"></i><i (click)="delete(i)" class="fa fa-trash  my-icons" aria-hidden="true"></i></th>
           </tr>
         </tbody>
       </table>
     </div>
+</div>
+
+<div class="w3-container w3-center">
+
+  <div id="id02" class="w3-modal" [ngStyle]="{'display': open ==true? 'block': 'none'}" >
+    <div class="w3-modal-content w3-animate-top w3-card-4">
+      <header class="w3-container w3-blue">
+        <span (click)="closeModal()" class="w3-button w3-display-topright">&times;</span>
+        <h2>Complete Delivery</h2>
+      </header>
+      <div class="w3-container">
+        <form class="w3-container" #formControlEdit="ngForm">
+            <label class="w3-text-blue">
+              <b>Type</b>
+            </label>
+            <select required [(ngModel)]="completeDelivery" style="text-align: center;" class="w3-center w3-input w3-border w3-light-grey w3-select w3-border"
+              name="option">
+              <option *ngFor="let obj of showStock;" [value]="obj._id">{{obj.name}}</option>
+            </select>
+ 
+          <p class="w3-center">
+            <button [disabled]="!formControlEdit.valid" (click)="updateConf()" class="w3-btn w3-blue">Done
+              <i class="fa fa-check"></i>
+            </button>
+          </p>
+        </form>
+      </div>
+    </div>
+  </div>
 </div>
 
 <div id="id03" class="modal" [ngStyle]="{'display': deleteOpen ==true? 'block': 'none'}">
